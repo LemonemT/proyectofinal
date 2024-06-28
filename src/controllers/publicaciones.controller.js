@@ -105,7 +105,6 @@ export const patchPublicacion = async (req, res) => {
       return res.status(400).json({ message: 'No se proporcionaron datos para actualizar' })
     }
 
-    // Actualizar campos de la publicación
     if (Object.keys(fields).length > 0) {
       const setClause = Object.keys(fields).map(key => `${key} = ?`).join(', ')
       const values = [...Object.values(fields), id]
@@ -120,12 +119,9 @@ export const patchPublicacion = async (req, res) => {
       }
     }
 
-    // Asignar categorías a la publicación
     if (categorias && Array.isArray(categorias)) {
-      // Primero, eliminar las categorías actuales
       await pool.execute('DELETE FROM publicacion_categoria WHERE publicacion_id = ?', [id])
 
-      // Luego, insertar las nuevas categorías
       for (const categoriaId of categorias) {
         await pool.execute('INSERT INTO publicacion_categoria (publicacion_id, categoria_id) VALUES (?, ?)', [id, categoriaId])
       }

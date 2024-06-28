@@ -15,19 +15,15 @@ dotenv.config()
 
 const app = express()
 
-// Middlewares
 app.use(morgan('dev'))
 app.use(express.json())
 
-// Rutas
 app.use('/api/usuarios', usuariosRoutes)
 app.use('/api/roles', roleRoutes)
 app.use('/api/publicaciones', publicacionRoutes)
 app.use('/api/categorias', categoriaRoutes)
 app.use('/api/comentarios', comentarioRoutes)
 
-// Swagger Docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput))
 
-// Inicio del servidor
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`))
